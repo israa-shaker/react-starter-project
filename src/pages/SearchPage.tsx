@@ -10,15 +10,15 @@ import Book from "../models/book";
 
 const SearchPage = () => {
   const [searchValue, setSearchValue] = useState<string | null>(null);
-  const [resultBooks, setResultBooks] = useState<Book[] | {error: string} | undefined>([]);
+  const [resultBooks, setResultBooks] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const bookShelfs = useSelector(
     (state: { books: { bookShelfs: BookShelfs } }) => state.books.bookShelfs
   );
-  const checkBookShelf = useCallback((data: Book[]) => {
-    let tranformedData: Book[] = [];
+  const checkBookShelf = useCallback((data: any) => {
+    let tranformedData = [];
     let stop = false;
     if (data && data?.length > 0) {
     for (let i = 0; i< data.length; i++) {
@@ -53,13 +53,12 @@ const SearchPage = () => {
           }
           setIsLoading(true);
           setError(false);
-          search(searchValue).then((data: Book[] | {error: string}) => {
+          search(searchValue).then((data: any) => {
             setIsLoading(false);
-            if (data?.error) {
-              setResultBooks({error: data?.error});
+            if (data.error) {
+              setResultBooks(data);
             } else {
-              const results = data as Book[];
-              const tranformedResults = checkBookShelf(results);
+              const tranformedResults = checkBookShelf(data);
               setResultBooks(tranformedResults);
             }
           }).catch(() => {
@@ -94,7 +93,7 @@ const SearchPage = () => {
       </div>
       {isLoading && <LoadingSpinner />}
       {!isLoading && error && <p className="search-books-results-error">No books data found</p>}
-      {!isLoading && !error && resultBooks && resultBooks?.error && <p className="search-books-results-error">No books data found</p>}
+      {!isLoading && !error && resultBooks?.error  && <p className="search-books-results-error">No books data found</p>}
       {!isLoading && !error && resultBooks?.length > 0 && (<div className="search-books-results">
         <ol className="books-grid">
         {resultBooks?.map((book: Book) => (
