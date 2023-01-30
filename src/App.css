@@ -133,6 +133,9 @@ body,
 .book {
   width: 140px;
 }
+.book-drag-cursor {
+  cursor: move;
+}
 .book-title,
 .book-authors {
   font-size: 0.8em;
