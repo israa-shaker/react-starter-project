@@ -29,7 +29,7 @@ const BookDetail = () => {
     <div className="book book-detail-container">
       {isLoading && <LoadingSpinner />}
       {error && !isLoading && <p>No book data found</p>}
-      {!error && !isLoading && (
+      {!error && !isLoading && bookData && (
         <div>
           <p>{bookData.shelf}</p>
           <p>

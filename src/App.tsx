@@ -50,7 +50,7 @@ function App() {
       .catch(() => {
         dispatch({ type: "GET_ALL_FAILED" });
       });
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="app">
